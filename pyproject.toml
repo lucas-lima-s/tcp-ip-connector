@@ -1,0 +1,86 @@
+[project]
+name = "tcpconn"
+version = "0.1.0"
+description = "Dependency-free Python TCP library: symmetric sync and asyncio client/server, pluggable framing and checksums, auto-reconnect and heartbeats."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+authors = [
+    { name = "Lucas de Lima", email = "106186397+lucas-lima-s@users.noreply.github.com" },
+]
+keywords = ["tcp", "sockets", "asyncio", "networking", "framing"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: System :: Networking",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+msgpack = ["msgpack>=1.1"]
+
+[project.urls]
+Homepage = "https://github.com/lucas-lima-s/tcp-ip-connector"
+Repository = "https://github.com/lucas-lima-s/tcp-ip-connector"
+Issues = "https://github.com/lucas-lima-s/tcp-ip-connector/issues"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.4",
+    "msgpack>=1.2.1",
+    "twine>=7.0.0",
+    "pyyaml>=6.0.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tcpconn"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W", "I", "N", "UP", "B", "C4", "SIM", "RUF",
+    "A", "ANN", "ASYNC", "S", "T20", "PL", "ARG",
+]
+ignore = ["ANN401", "N818", "S311", "PLR0913", "ASYNC109"]
+
+[tool.ruff.lint.per-file-ignores]
+"examples/**" = ["T20", "ANN", "S101", "PLR2004", "ARG"]
+"tests/**" = ["T20", "ANN", "S101", "PLR2004", "ARG", "S603", "PLC0415"]
+
+[tool.mypy]
+python_version = "3.12"
+files = ["src", "tests", "examples"]
+strict = true
+explicit_package_bases = true
+mypy_path = ["src", "tests"]
+
+[[tool.mypy.overrides]]
+module = "msgpack.*"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+filterwarnings = ["error"]
+addopts = "-ra --strict-markers --strict-config --cov=tcpconn --cov-report=term-missing --cov-report=xml --cov-fail-under=85"
+
+[tool.coverage.run]
+source = ["tcpconn"]
+branch = true
