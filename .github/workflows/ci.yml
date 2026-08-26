@@ -46,6 +46,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: uv sync --locked --all-groups
       - run: uv run pytest
+      - run: uv run coverage report --fail-under=85
 
   build:
     needs: [lint, test]

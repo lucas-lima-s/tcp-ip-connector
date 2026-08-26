@@ -40,6 +40,7 @@ dev = [
     "msgpack>=1.2.1",
     "twine>=7.0.0",
     "pyyaml>=6.0.2",
+    "pre-commit>=4.0.1",
 ]
 
 [build-system]
@@ -79,7 +80,7 @@ ignore_missing_imports = true
 asyncio_mode = "auto"
 testpaths = ["tests"]
 filterwarnings = ["error"]
-addopts = "-ra --strict-markers --strict-config --cov=tcpconn --cov-report=term-missing --cov-report=xml --cov-fail-under=85"
+addopts = "-ra --strict-markers --strict-config --cov=tcpconn --cov-report=term-missing --cov-report=xml"
 
 [tool.coverage.run]
 source = ["tcpconn"]
